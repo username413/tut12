@@ -84,7 +84,7 @@ async def respond_to_message(websocket, message):
             'details': 'See instructions for list of valid message formats.'}
         return await websocket.send(json.dumps(data))
     
-    await websocket.send(json.dumps(data))
+    # await websocket.send(json.dumps(data))
     
     if data.get("type") == "login":
         logged_in_users[websocket] = data.get("username")
@@ -102,6 +102,10 @@ async def respond_to_message(websocket, message):
         }
     elif data.get("type") == "chat":
         res_msg = data
+    else:
+        res_msg = {
+            "msg": "invalid 'type'"
+        }
 
     for sock in logged_in_users:
         # TODO: replace "data" with a message that conforms to
